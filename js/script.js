@@ -1,5 +1,5 @@
 const PASSWORD = "26.08";
-const NEXT_PAGE = "timeline.html";
+const NEXT_PAGE = "galeri.html";
 
 document.getElementById("password-form").addEventListener("submit", function(event){
     event.preventDefault();

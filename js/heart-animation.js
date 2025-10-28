@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/cards');
+            const response = await fetch('https://love-letter-api.onrender.com/api/cards');
 
             if (!response.ok) {
                 throw new Error(`Помилка HTTP: ${response.status}`);
@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
             formData.append('file', file);
         
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/cards', {
+                const response = await fetch('https://love-letter-api.onrender.com/api/cards', {
                     method: 'POST',
                     
                     body: formData 

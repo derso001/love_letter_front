@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Наш Світ ❤️</title>
+    <link rel="stylesheet" href="css/main.css"> </head>
+<body>
+
+    <div class="love-canvas" id="love-canvas">
+        </div>
+
+    <div class="content-wrapper">
+        <header>
+            <h1>Вітаю!</h1>
+        </header>
+
+        <main>
+            <section class="intro-message">
+                <p>Цей вебсайт - моя спроба зібрати всі моменти, які роблять наше життя таким особливим.</p>
+                <p>Сподіваюся, ти отримаєш задоволення, згадуючи їх так само, як і я, коли створював це для тебе.</p>
+                <p class="signature">З любов'ю, <br> Борис</p>
+                <hr>
+            </section>
+            
+            <div class="cards">
+                </div>
+
+            <hr>
+
+            <section class="form-container">
+                <h3>Додати новий спогад</h3>
+                
+                <form id="add-card-form">
+                    <div class="form-group">
+                        <label for="card-title">Заголовок:</label>
+                        <input type="text" id="card-title" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="card-description">Опис:</label>
+                        <textarea id="card-description" rows="3" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="card-data">Дата:</label>
+                        <input type="text" id="card-data" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="card-file">Фотографія:</label>
+                        <input type="file" id="card-file" accept="image/*" required>
+                    </div>
+                    
+                    <button type="submit">Додати спогад</button>
+                </form>
+            </section>
+            
+        </main>
+
+        <footer>
+            <p>&copy; 2023 Наші Спогади. Всі права належать нам обом. ❤️</p>
+        </footer>
+    </div>
+
+    <script src="js/heart-animation.js"></script> </body>
+</html>

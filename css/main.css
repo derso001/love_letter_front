@@ -1,0 +1,206 @@
+body {
+    margin: 0;
+    font-family: 'Open Sans', sans-serif; 
+    background-image: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+    color: #333;
+    line-height: 1.6;
+    overflow-x: hidden; 
+    position: relative;
+    min-height: 100vh;
+}
+
+.content-wrapper {
+    position: relative;
+    z-index: 1; 
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 30px 20px;
+    background: rgba(255, 255, 255, 0.95); 
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+header h1{
+    color: #e91e63;
+    margin-bottom: 10px;
+    font-size: 2em;
+}
+
+.intro-message {
+    font-size: 1.1em;
+    margin-bottom: 40px;
+    text-align: justify;
+}
+
+.intro-message p {
+    margin-bottom: 15px;
+}
+
+.signature {
+    text-align: right;
+    font-style: italic;
+    margin-top: 30px;
+    color: #888;
+}
+
+
+
+.love-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; 
+    overflow: hidden;
+    z-index: 0; 
+}
+
+
+.heart {
+    position: absolute;
+    color: #e91e63; 
+    font-size: 2em; 
+    opacity: 0;
+    
+    animation-name: floatUp;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards; 
+    
+    transform: rotate(var(--rotation, 0deg)); 
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(100vh) scale(0);
+        opacity: 0;
+    }
+    20% {
+        opacity: 0.8;
+        transform: translateY(80vh) scale(0.8) rotate(var(--rotation, 0deg));
+    }
+    100% {
+        transform: translateY(-50px) scale(1.2) rotate(var(--rotation, 0deg));
+        opacity: 0;
+    }
+}
+
+.cards{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+    justify-content: center;
+}
+
+.card-container {
+    background-color: transparent;
+    width: 200px; 
+    height: 300px; 
+    perspective: 1000px; 
+    margin: 15px; 
+    cursor: pointer;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s; 
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    border-radius: 15px;
+}
+
+.card-container.is-flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden; 
+    border-radius: 15px;
+    overflow: hidden; 
+}
+
+.card-front img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+}
+
+.card-back {
+    background-color: #e91e63; 
+    color: white;
+    padding: 25px;
+    transform: rotateY(180deg); 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box; 
+}
+
+.card-back h3 {
+    margin-top: 0;
+    font-family: 'Dancing Script', cursive; 
+    font-size: 1em;
+}
+
+.card-back p {
+    font-size: 1em;
+}
+p.data{
+    font-size: 0.75em;
+    color: rgb(216, 216, 216);
+}
+
+.form-container {
+    background: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+}
+.form-container h3 {
+    margin-top: 0;
+    text-align: center;
+    color: #e91e63;
+}
+.form-group {
+    margin-bottom: 15px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+.form-group input,
+.form-group textarea {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: 'Open Sans', sans-serif;
+}
+.form-container button {
+    background-color: #e91e63;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    width: 100%;
+}
+.form-container button:hover {
+    background-color: #c2185b;
+}

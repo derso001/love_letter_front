@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const cardsContainer = document.querySelector('.cards'); // Знаходимо наш порожній контейнер
+    const API_URL = 'https://love-letter-api.onrender.com/api/cards';
 
     async function loadCards() {
 
@@ -9,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         
         try {
-            const response = await fetch('https://love-letter-api.onrender.com/api/cards');
+            const response = await fetch(API_URL);
 
             if (!response.ok) {
                 throw new Error(`Помилка HTTP: ${response.status}`);
@@ -33,6 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 <h3>${card.title}</h3>
                                 <p>${card.description}</p>
                                 <p class="data">${card.data}</p>
+                                <button class="delete-btn" data-id="${card.id}">🗑️ Видалити</button>
                             </div>
                         </div>
                     </div>
@@ -42,6 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             initializeCardFlips();
+            initializeDeleteButtons();
 
         } catch (error) {
             console.error("Не вдалося завантажити картки:", error);
@@ -54,6 +57,50 @@ document.addEventListener("DOMContentLoaded", () => {
         cardElements.forEach(card => {
             card.addEventListener('click', () => {
                 card.classList.toggle('is-flipped');
+            });
+        });
+    }
+
+    // НОВА Функція для кнопок видалення
+    function initializeDeleteButtons() {
+        const deleteButtons = document.querySelectorAll('.delete-btn');
+        deleteButtons.forEach(btn => {
+            btn.addEventListener('click', async (event) => {
+                // Зупиняємо переворот картки
+                event.stopPropagation(); 
+
+                const cardId = btn.getAttribute('data-id');
+                if (!cardId) return;
+
+                const isConfirmed = confirm("Точно хочеш назавжди видалити цей спогад?");
+                if (!isConfirmed) return;
+
+                const originalText = btn.innerText;
+                btn.innerText = '⏳...';
+                btn.disabled = true;
+
+                try {
+                    const response = await fetch(`${API_URL}/${cardId}`, {
+                        method: 'DELETE'
+                    });
+
+                    if (response.ok) {
+                        // Видаляємо з екрану
+                        const cardElement = btn.closest('.timeline-item') || btn.closest('.card-container');
+                        if (cardElement) {
+                            cardElement.remove();
+                        }
+                    } else {
+                        alert("Не вдалося видалити на сервері.");
+                        btn.innerText = originalText;
+                        btn.disabled = false;
+                    }
+                } catch (error) {
+                    console.error("Помилка видалення:", error);
+                    alert("Помилка з'єднання з сервером.");
+                    btn.innerText = originalText;
+                    btn.disabled = false;
+                }
             });
         });
     }
@@ -125,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
             formData.append('file', file);
         
             try {
-                const response = await fetch('https://love-letter-api.onrender.com/api/cards', {
+                const response = await fetch('http://127.0.0.1:8000/api/cards', {
                     method: 'POST',
                     
                     body: formData 

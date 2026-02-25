@@ -342,6 +342,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
         
                 cardsContainer.innerHTML = ''; 
+                tagsContainer.innerHTML = '';
         
                 loadCards(); 
                 

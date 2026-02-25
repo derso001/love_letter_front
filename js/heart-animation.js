@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
         // Обертаємо все в try-catch. Тепер будь-яка помилка тут не зламає весь сайт!
         try {
             const tagsContainer = document.getElementById('tags-container');
-            tagsContainer.innerHTML = '<label id="open-tags-modal-btn" class="tag-modal-trigger">➕ Новий тег</label>'; // Очищаємо перед тим, як додавати нові теги (на випадок повторного виклику)
             const openModalBtn = document.getElementById('open-tags-modal-btn');
             
             if (!tagsContainer) return; // Якщо контейнера немає, просто виходимо
@@ -50,6 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function loadCards() {
+        
 
         if (!cardsContainer) {
             console.error("Контейнер .cards не знайдено!");
@@ -234,7 +234,7 @@ document.addEventListener("DOMContentLoaded", () => {
             formLabel.innerHTML = `<input type="checkbox" name="tags" value="${tagValue}" checked> ${tagValue}`;
             
             // Вставляємо перед кнопкою "➕ Свій тег"
-            tagsContainer.insertBefore(formLabel, openModalBtn);
+            tagsContainer.appendChild(formLabel);
 
             // --- Б. Додаємо в список всередині модалки (для видалення) ---
             const listItem = document.createElement('div');

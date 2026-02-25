@@ -336,6 +336,7 @@ p.tags{
     width: auto;
     margin: 0;
     box-shadow: none;
+    margin-top: 10px;
 }
 
 .tag-modal-trigger:hover {

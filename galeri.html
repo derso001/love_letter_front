@@ -47,9 +47,14 @@
                         <input type="date" id="card-data" required>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="card-file">Фотографія:</label>
-                        <input type="file" id="card-file" accept="image/*" required>
+                    <div class="file-upload-wrapper">
+                        <input type="file" id="card-file" class="hidden-file-input" accept="image/*">
+                        
+                        <label for="card-file" class="custom-file-button">
+                            📁 Обрати фото
+                        </label>
+                        
+                        <span id="file-name" class="file-name-display">Файл не вибрано</span>
                     </div>
                     
                     <button type="submit">Додати спогад</button>

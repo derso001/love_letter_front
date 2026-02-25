@@ -205,6 +205,8 @@ p.data{
 }
 .form-container button:hover {
     background-color: #c2185b;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(255, 77, 109, 0.4);
 }
 
 .delete-btn {
@@ -225,4 +227,51 @@ p.data{
     background-color: white;
     color: #ff4d6d; /* Текст стає рожевим при наведенні */
     font-weight: bold;
+}
+
+/* Ховаємо страшний стандартний інпут */
+.hidden-file-input {
+    display: none;
+}
+
+/* Обгортка для вирівнювання */
+.file-upload-wrapper {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Відстань між кнопкою і текстом */
+}
+
+/* Стилізуємо наш лейбл як круту кнопку */
+.custom-file-button {
+
+    background-color: #e91e63;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+    font-size: 0.9em;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(255, 77, 109, 0.2);
+    display: inline-block;
+}
+
+.custom-file-button:hover {
+    background-color: #c2185b;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(255, 77, 109, 0.4);
+}
+
+/* Текст з назвою файлу */
+.file-name-display {
+    font-size: 0.9em;
+    color: #666;
+    font-style: italic;
+    /* Якщо назва дуже довга, обрізаємо її з трьома крапками */
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

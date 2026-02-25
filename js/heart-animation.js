@@ -23,6 +23,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
+            cards.sort((a, b) => new Date(a.data) - new Date(b.data));
+
             cards.forEach(card => {
                 const cardHTML = `
                     <div class="card-container">
@@ -146,6 +148,22 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     const addCardForm = document.getElementById('add-card-form');
+    const fileInput = document.getElementById('card-file');
+    const fileNameDisplay = document.getElementById('file-name');
+
+    if (fileInput && fileNameDisplay) {
+        fileInput.addEventListener('change', function() {
+            if (this.files && this.files.length > 0) {
+                fileNameDisplay.textContent = this.files[0].name;
+                fileNameDisplay.style.color = "#ff4d6d"; // Робимо текст рожевим для підтвердження
+                fileNameDisplay.style.fontWeight = "bold";
+            } else {
+                fileNameDisplay.textContent = 'Файл не вибрано';
+                fileNameDisplay.style.color = "#666";
+                fileNameDisplay.style.fontWeight = "normal";
+            }
+        });
+    }
 
     if (addCardForm) {
         

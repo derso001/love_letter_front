@@ -472,3 +472,39 @@ p.tags{
     display: inline-block;
     border: 1px solid rgba(255, 77, 109, 0.2);
 }
+
+/* --- СТИЛІ ДЛЯ ФІЛЬТРУ --- */
+.filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 25px;
+    padding: 0 10px;
+}
+
+.filter-btn {
+    background-color: #f0f0f0;
+    color: #555;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+.filter-btn:hover {
+    background-color: #ffe6ea;
+    color: #ff4d6d;
+}
+
+/* Стиль для натиснутої (активної) кнопки */
+.filter-btn.active {
+    background-color: #ff4d6d;
+    color: white;
+    box-shadow: 0 4px 10px rgba(255, 77, 109, 0.4);
+    transform: scale(1.05);
+}

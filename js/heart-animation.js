@@ -77,13 +77,16 @@ document.addEventListener("DOMContentLoaded", () => {
             cards.forEach(card => {
 
                 let tagsHTML = '';
+                let filterTags = '';
+
                 if (card.tags) {
                     const tagsArray = card.tags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0);
                     tagsHTML = tagsArray.map(tag => `<span class="tag-badge">${tag}</span>`).join('');
+                    filterTags = card.tags.toLowerCase();
                 }
 
                 const cardHTML = `
-                    <div class="card-container">
+                    <div class="card-container" data-tags="${filterTags}">
                         <div class="card-inner">
                             <div class="card-front">
                                 <img src="${card.imageUrl}" alt="${card.title}">

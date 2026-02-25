@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const cardsContainer = document.querySelector('.cards'); // Знаходимо наш порожній контейнер
     const API_URL = 'https://love-letter-api.onrender.com/api/cards';
+    // const API_URL = 'http://127.0.0.1:8000/api/cards';
 
     async function loadCards() {
 
@@ -36,6 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 <h3>${card.title}</h3>
                                 <p>${card.description}</p>
                                 <p class="data">${card.data}</p>
+                                <p class="tags">${card.tags}</p>
                                 <button class="delete-btn" data-id="${card.id}">🗑️ Видалити</button>
                             </div>
                         </div>
@@ -63,14 +65,12 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // НОВА Функція для кнопок видалення
     function initializeDeleteButtons() {
         const deleteButtons = document.querySelectorAll('.delete-btn');
         deleteButtons.forEach(btn => {
             btn.addEventListener('click', async (event) => {
-                // Зупиняємо переворот картки
+             
                 event.stopPropagation(); 
-
                 const cardId = btn.getAttribute('data-id');
                 if (!cardId) return;
 
@@ -147,6 +147,76 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    const openModalBtn = document.getElementById('open-tags-modal-btn');
+    const closeModalBtn = document.getElementById('close-tags-modal-btn');
+    const tagsModal = document.getElementById('custom-tags-modal');
+    const modalInput = document.getElementById('modal-new-tag-input');
+    const modalAddBtn = document.getElementById('modal-add-tag-btn');
+    const modalTagsList = document.getElementById('modal-tags-list');
+    const tagsContainer = document.getElementById('tags-container');
+
+    if (openModalBtn && tagsModal) {
+        openModalBtn.addEventListener('click', () => {
+            tagsModal.classList.remove('hidden');
+            modalInput.focus();
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            tagsModal.classList.add('hidden');
+        });
+
+        // 2. Функція створення тегу
+        function createCustomTag() {
+            const tagValue = modalInput.value.trim();
+            if (!tagValue) return;
+
+            // --- А. Додаємо в головну форму (як звичайну плашку) ---
+            const formLabel = document.createElement('label');
+            formLabel.classList.add('custom-added-tag'); // Мітка, щоб знати, що це наш кастомний
+            formLabel.setAttribute('data-tag', tagValue); // Прив'язуємо значення
+            formLabel.innerHTML = `<input type="checkbox" name="tags" value="${tagValue}" checked> ${tagValue}`;
+            
+            // Вставляємо перед кнопкою "➕ Свій тег"
+            tagsContainer.insertBefore(formLabel, openModalBtn);
+
+            // --- Б. Додаємо в список всередині модалки (для видалення) ---
+            const listItem = document.createElement('div');
+            listItem.classList.add('modal-tag-item');
+            listItem.innerHTML = `
+                <span>${tagValue}</span>
+                <label type="button" class="delete-custom-tag" data-tag="${tagValue}">×</label>
+            `;
+            modalTagsList.appendChild(listItem);
+
+            // Очищаємо інпут
+            modalInput.value = '';
+
+            // --- В. Вішаємо логіку видалення на хрестик ---
+            const deleteBtn = listItem.querySelector('.delete-custom-tag');
+            deleteBtn.addEventListener('click', function() {
+                const tagToRemove = this.getAttribute('data-tag');
+                
+                // Видаляємо зі списку модалки
+                listItem.remove();
+                
+                // Шукаємо цей же тег у головній формі і видаляємо його теж
+                const formTagToRemove = tagsContainer.querySelector(`label[data-tag="${tagToRemove}"]`);
+                if (formTagToRemove) {
+                    formTagToRemove.remove();
+                }
+            });
+        }
+
+        // 3. Обробники для кнопки "Додати" та клавіші Enter
+        modalAddBtn.addEventListener('click', createCustomTag);
+        modalInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Щоб форма не відправилась
+                createCustomTag();
+            }
+        });
+    }
+
     const addCardForm = document.getElementById('add-card-form');
     const fileInput = document.getElementById('card-file');
     const fileNameDisplay = document.getElementById('file-name');
@@ -173,22 +243,28 @@ document.addEventListener("DOMContentLoaded", () => {
             const title = document.getElementById('card-title').value;
             const description = document.getElementById('card-description').value;
             const data = document.getElementById('card-data').value;
-            
             const fileInput = document.getElementById('card-file');
             const file = fileInput.files[0];
-        
+
+
+            const selectedTagsElements = document.querySelectorAll('input[name="tags"]:checked');
+            const tagsArray = Array.from(selectedTagsElements).map(checkbox => checkbox.value);
+            const tagsString = tagsArray.join(','); 
+
+            console.log("Відправляю дані:", { title, description, data, tags: tagsString, file });
+
             if (!file) {
                 alert("Будь ласка, оберіть фото");
                 return;
             }
-        
+
             const formData = new FormData();
-            
             formData.append('title', title);
             formData.append('description', description);
             formData.append('data', data);
+            formData.append('tags', tagsString);
             formData.append('file', file);
-        
+                    
             try {
                 const response = await fetch(API_URL, {
                     method: 'POST',

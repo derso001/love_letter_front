@@ -46,6 +46,30 @@
                         <label for="card-data">Дата:</label>
                         <input type="date" id="card-data" required>
                     </div>
+
+                    <div class="checkbox-group" id="tags-container">
+                        <label><input type="checkbox" name="tags" value="Побачення"> Побачення</label>
+                        <label><input type="checkbox" name="tags" value="Подорожі"> Подорожі</label>
+                        <label><input type="checkbox" name="tags" value="Свята"> Свята</label>
+                        
+                        <label id="open-tags-modal-btn" class="tag-modal-trigger">➕ Новий тег</label>
+                    </div>
+                    
+                    <div id="custom-tags-modal" class="modal-overlay hidden">
+                        <div class="modal-content">
+                            <h3>Керування тегами</h3>
+                            
+                            <div class="modal-input-row">
+                                <input type="text" id="modal-new-tag-input" autocomplete="off">
+                                <label id="modal-add-tag-btn">Додати</label>
+                            </div>
+                            
+                            <div id="modal-tags-list" class="modal-tags-list">
+                                </div>
+                            
+                            <button type="button" id="close-tags-modal-btn" class="modal-close-btn">Готово</button>
+                        </div>
+                    </div>
                     
                     <div class="file-upload-wrapper">
                         <input type="file" id="card-file" class="hidden-file-input" accept="image/*">
@@ -56,7 +80,7 @@
                         
                         <span id="file-name" class="file-name-display">Файл не вибрано</span>
                     </div>
-                    
+
                     <button type="submit">Додати спогад</button>
                 </form>
             </section>

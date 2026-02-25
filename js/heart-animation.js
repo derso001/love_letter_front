@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     const loveCanvas = document.getElementById('love-canvas');
-
+    if (loveCanvas){
     function createHeart() {
         const heart = document.createElement('div');
         heart.classList.add("heart");
@@ -131,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
         heart.addEventListener("animationend", () => {
             heart.remove();
         })
-    }
+    }}
     setInterval(createHeart, 300);
     
     for (let i=0; i<15; i++){
@@ -172,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
             formData.append('file', file);
         
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/cards', {
+                const response = await fetch(API_URL, {
                     method: 'POST',
                     
                     body: formData 

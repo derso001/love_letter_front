@@ -48,6 +48,62 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    function renderFilters(cards) {
+        const filterContainer = document.getElementById('filter-container');
+        if (!filterContainer) return;
+    
+        // ЧАСТИНА 1: Збираємо всі унікальні теги з фотографій
+        const uniqueTags = new Set();
+        cards.forEach(card => {
+            if (card.tags && typeof card.tags === 'string') {
+                const cardTags = card.tags.split(',').map(tag => tag.trim()).filter(t => t.length > 0);
+                cardTags.forEach(tag => uniqueTags.add(tag));
+            }
+        });
+    
+        // ЧАСТИНА 2: Створюємо HTML-кнопки
+        // Перша кнопка завжди "Всі", щоб можна було скинути фільтр
+        let filterHTML = `<button class="filter-btn active" data-filter="all">🌟 Всі</button>`;
+        
+        uniqueTags.forEach(tag => {
+            // Записуємо назву тегу в data-filter маленькими літерами, щоб точно співпадало
+            filterHTML += `<button class="filter-btn" data-filter="${tag.toLowerCase()}">${tag}</button>`;
+        });
+        
+        // Вставляємо готові кнопки на сторінку
+        filterContainer.innerHTML = filterHTML;
+    
+        // ЧАСТИНА 3: Додаємо "магію" кліків (ховаємо/показуємо картки)
+        const filterButtons = filterContainer.querySelectorAll('.filter-btn');
+        
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Робимо натиснуту кнопку "активною" (міняємо колір)
+                filterButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+    
+                // Читаємо, який саме тег натиснули
+                const filterValue = btn.getAttribute('data-filter');
+                
+                // Знаходимо всі картки на екрані
+                const allCardElements = document.querySelectorAll('.card-container');
+    
+                allCardElements.forEach(cardEl => {
+                    // Беремо ті самі невидимі теги, які ми додали в 3-му кроці
+                    const cardTags = cardEl.getAttribute('data-tags') || '';
+                    
+                    // Якщо натиснули "Всі" АБО в картці є потрібний тег -> показуємо її
+                    if (filterValue === 'all' || cardTags.includes(filterValue)) {
+                        cardEl.style.display = 'block'; 
+                    } else {
+                        // Якщо тегу немає -> ховаємо картку
+                        cardEl.style.display = 'none'; 
+                    }
+                });
+            });
+        });
+    }
+
     async function loadCards() {
         
 
@@ -66,6 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const cards = await response.json();
 
             renderDynamicTagsForForm(cards);
+            renderFilters(cards);
 
             if (cards.length === 0) {
                 cardsContainer.innerHTML = "<p>Поки що тут немає спогадів...</p>";

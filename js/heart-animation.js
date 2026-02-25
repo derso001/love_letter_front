@@ -3,6 +3,52 @@ document.addEventListener("DOMContentLoaded", () => {
     const API_URL = 'https://love-letter-api.onrender.com/api/cards';
     // const API_URL = 'http://127.0.0.1:8000/api/cards';
 
+    const defaultTags = []; // Твій порожній масив (або можеш додати туди базові теги)
+
+    function renderDynamicTagsForForm(cards) {
+        // Обертаємо все в try-catch. Тепер будь-яка помилка тут не зламає весь сайт!
+        try {
+            const tagsContainer = document.getElementById('tags-container');
+            tagsContainer.innerHTML = '<label id="open-tags-modal-btn" class="tag-modal-trigger">➕ Новий тег</label>'; // Очищаємо перед тим, як додавати нові теги (на випадок повторного виклику)
+            const openModalBtn = document.getElementById('open-tags-modal-btn');
+            
+            if (!tagsContainer) return; // Якщо контейнера немає, просто виходимо
+    
+            // Захист: якщо сервер раптом повернув помилку замість масиву карток
+            if (!Array.isArray(cards)) return; 
+    
+            const uniqueTags = new Set(defaultTags);
+    
+            // Збираємо теги
+            cards.forEach(card => {
+                // Додатковий захист: перевіряємо, що теги є і це точно текст
+                if (card.tags && typeof card.tags === 'string') {
+                    const cardTags = card.tags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0);
+                    cardTags.forEach(tag => uniqueTags.add(tag));
+                }
+            });
+    
+            // Очищаємо старі плашки
+            const existingLabels = tagsContainer.querySelectorAll('label');
+            // existingLabels.forEach(label => label.remove());
+    
+            // Малюємо нові плашки БЕЗПЕЧНО
+            uniqueTags.forEach(tag => {
+                const label = document.createElement('label');
+                label.setAttribute('data-tag', tag); 
+                label.innerHTML = `<input type="checkbox" name="tags" value="${tag}"> ${tag}`;
+                
+                // Просто закидаємо всі теги в їхній контейнер
+                tagsContainer.appendChild(label);
+            });
+    
+        } catch (error) {
+            // Якщо станеться якась магія, ми побачимо це в консолі, 
+            // але сайт продовжить працювати і фотки завантажаться!
+            console.error("Помилка генерації тегів для форми:", error);
+        }
+    }
+
     async function loadCards() {
 
         if (!cardsContainer) {
@@ -19,6 +65,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const cards = await response.json();
 
+            renderDynamicTagsForForm(cards);
+
             if (cards.length === 0) {
                 cardsContainer.innerHTML = "<p>Поки що тут немає спогадів...</p>";
                 return;
@@ -27,6 +75,13 @@ document.addEventListener("DOMContentLoaded", () => {
             cards.sort((a, b) => new Date(a.data) - new Date(b.data));
 
             cards.forEach(card => {
+
+                let tagsHTML = '';
+                if (card.tags) {
+                    const tagsArray = card.tags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0);
+                    tagsHTML = tagsArray.map(tag => `<span class="tag-badge">${tag}</span>`).join('');
+                }
+
                 const cardHTML = `
                     <div class="card-container">
                         <div class="card-inner">
@@ -37,7 +92,9 @@ document.addEventListener("DOMContentLoaded", () => {
                                 <h3>${card.title}</h3>
                                 <p>${card.description}</p>
                                 <p class="data">${card.data}</p>
-                                <p class="tags">${card.tags}</p>
+                                <div class="card-tags-container">
+                                    ${tagsHTML}
+                                </div>
                                 <button class="delete-btn" data-id="${card.id}">🗑️ Видалити</button>
                             </div>
                         </div>
@@ -277,7 +334,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
         
                 addCardForm.reset(); 
+                
+                if (fileNameDisplay) {
+                    fileNameDisplay.textContent = 'Файл не вибрано';
+                    fileNameDisplay.style.color = "#666";
+                    fileNameDisplay.style.fontWeight = "normal";
+                }
+        
+                cardsContainer.innerHTML = ''; 
+        
                 loadCards(); 
+                
+                alert("Спогад успішно додано! ❤️");
         
             } catch (error) {
                 console.error('Помилка при додаванні картки:', error);

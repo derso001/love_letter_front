@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const wishListEl = document.querySelector('#wish-list-container');
     
     // Для тестування локально. При деплої заміниш на URL Render.
-    const API_URL = 'http://127.0.0.1:8000/api/wishes'; 
+    // const API_URL = 'http://127.0.0.1:8000/api/wishes'; 
+    const API_URL = 'https://love-letter-api.onrender.com/api/wishes';
     
     // Отримання даних з бази
     async function fetchWishes() {

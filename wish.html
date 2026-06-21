@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🎁 Wishlist</title>
+  <link rel="stylesheet" href="css/wish.css" />
+</head>
+
+
+<body>
+    <nav class="side-nav">
+        <a href="galeri.html" class="nav-square " title="Галерея">🖼️</a>
+        <a href="wish.html" class="nav-square active" title="Список бажань">🎁</a>
+    </nav>
+    <header></header>
+    <main>
+        <div class="love-canvas" id="love-canvas">
+        </div>
+        <div class="content-wrapper">
+            
+            <h1>🎁 Wishlist</h1>
+
+    <form id="wish-form">
+        <input type="text" id="wish-name" placeholder="Що ти хочеш?" required />
+        <input type="url" id="wish-link" placeholder="Посилання (необов'язково)" />
+        <input type="number" id="wish-price" placeholder="Ціна (грн)" min="0" />
+        <div class="author-toggle">
+            <input type="radio" id="author-boris" name="wish-author" value="Борис" checked>
+            <label for="author-boris">Борис</label>
+        
+            <input type="radio" id="author-her" name="wish-author" value="Вона">
+            <label for="author-her">Віка</label>
+        </div>
+        <button type="submit">Додати бажання</button>
+        
+    </form>
+
+    <h2>Наш список бажань:</h2>
+
+    <div id="wish-list-container">
+        
+    </div>
+  </div>
+</main>
+<footer></footer>
+<script src="js/wish.js"></script>
+</body>
+</html>

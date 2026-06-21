@@ -50,7 +50,62 @@ header h1{
     color: #888;
 }
 
+/* =========================================
+   БОКОВА НАВІГАЦІЯ
+   ========================================= */
+   .side-nav {
+    position: fixed;
+    top: 15%; 
+    /* 1. Спочатку ставимо меню рівно по центру екрана */
+    left: 50%; 
+    /* 2. Зсуваємо вліво: -400px (половина твого контейнера на 800px) + -70px (безпечний відступ) = -470px.
+          По вертикалі залишаємо зміщення на -50%, щоб центрувати самі кнопки */
+    transform: translate(-470px, -50%); 
+    display: flex;
+    flex-direction: column; 
+    gap: 15px; 
+    z-index: 100; 
+}
 
+/* Базовий стиль квадратика */
+.nav-square {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.7); /* Напівпрозорий білий */
+    border: 2px solid #e91e63;
+    border-radius: 12px; /* М'які кути */
+    text-decoration: none;
+    font-size: 1.5em; /* Розмір емодзі */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+/* Ефект при наведенні мишкою */
+.nav-square:hover {
+    background-color: #ffe6ea;
+    transform: scale(1.1); /* Трохи збільшується */
+    box-shadow: 0 6px 15px rgba(233, 30, 99, 0.3);
+}
+
+/* Стиль АКТИВНОЇ сторінки (щоб розуміти, де ти зараз) */
+.nav-square.active {
+    background-color: #e91e63;
+    border-color: #e91e63;
+    pointer-events: none; /* Вимикаємо клік по сторінці, на якій ми і так є */
+    box-shadow: 0 0 15px rgba(233, 30, 99, 0.5);
+    filter: grayscale(0); /* Залишаємо емодзі яскравим */
+}
+
+/* Робимо емодзі неактивної сторінки трохи блідішим (опціонально) */
+.nav-square:not(.active) {
+    filter: grayscale(0.5);
+}
+.nav-square:not(.active):hover {
+    filter: grayscale(0);
+}
 
 .love-canvas {
     position: fixed;
@@ -156,7 +211,7 @@ header h1{
 }
 
 .card-back p {
-    font-size: 1em;
+    font-size: 0.7em;
 }
 p.data{
     font-size: 0.75em;
@@ -226,6 +281,10 @@ p.tags{
     cursor: pointer;
     transition: all 0.3s ease;
     z-index: 10; /* Щоб точно була клікабельною */
+
+    position: absolute; /* Дитина "відривається" */
+    bottom: 15px;       /* Відступ 10px від нижнього краю БАТЬКА */
+    right: 15px;        /* Відступ 10px від правого краю БАТЬКА */
 }
 
 .delete-btn:hover {
@@ -507,4 +566,32 @@ p.tags{
     color: white;
     box-shadow: 0 4px 10px rgba(255, 77, 109, 0.4);
     transform: scale(1.05);
+}
+
+/* =========================================
+   МОБІЛЬНА АДАПТАЦІЯ (Телефони до 768px)
+   ========================================= */
+   @media (max-width: 768px) {
+    /* 4. Навігація: трансформуємо бокове меню у плаваючий нижній док */
+    .side-nav {
+        top: auto;                   /* Скидаємо твої 15% зверху */
+        bottom: 15px;                /* Фіксуємо знизу екрана */
+        left: 50%;                   /* Ставимо по центру */
+        transform: translateX(-50%); /* Скидаємо старий translate і центруємо по горизонталі */
+        flex-direction: row;         /* Квадратики тепер стоять в один ряд */
+        
+        background-color: rgba(255, 255, 255, 0.95);
+        padding: 8px 16px;
+        border-radius: 16px;
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.12);
+        gap: 15px;
+        backdrop-filter: blur(5px); /* Легке розмиття фону за кнопками */
+    }
+
+    /* Трохи зменшуємо квадратики, щоб вони акуратно стояли на телефонах */
+    .nav-square {
+        width: 46px;
+        height: 46px;
+        font-size: 1.3em;
+    }
 }

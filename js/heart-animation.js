@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const cardsContainer = document.querySelector('.cards'); // Знаходимо наш порожній контейнер
-    const API_URL = 'https://love-letter-api.onrender.com/api/cards';
-    // const API_URL = 'http://127.0.0.1:8000/api/cards';
+    // const API_URL = 'https://love-letter-api.onrender.com/api/cards';
+    const API_URL = 'http://127.0.0.1:8000/api/cards';
 
     const defaultTags = []; // Твій порожній масив (або можеш додати туди базові теги)
 
@@ -155,7 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 <div class="card-tags-container">
                                     ${tagsHTML}
                                 </div>
-                                <button class="delete-btn" data-id="${card.id}">🗑️ Видалити</button>
+                                <button class="delete-btn" data-id="${card.id}">🗑️</button>
                             </div>
                         </div>
                     </div>

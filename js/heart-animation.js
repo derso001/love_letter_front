@@ -415,4 +415,44 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
+    const startDate = new Date("2025-08-26T15:00:00"); 
+
+    function updateTimer() {
+        const now = new Date();
+        
+        let years = now.getFullYear() - startDate.getFullYear();
+        let months = now.getMonth() - startDate.getMonth();
+        let days = now.getDate() - startDate.getDate();
+        let hours = now.getHours() - startDate.getHours();
+        let minutes = now.getMinutes() - startDate.getMinutes();
+        let seconds = now.getSeconds() - startDate.getSeconds();
+
+        // Коригуємо від'ємні значення, позичаючи в старших розрядів
+        if (seconds < 0) { seconds += 60; minutes--; }
+        if (minutes < 0) { minutes += 60; hours--; }
+        if (hours < 0) { hours += 24; days--; }
+        if (days < 0) {
+            months--;
+            // Дізнаємося кількість днів у попередньому місяці
+            let previousMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+            days += previousMonth.getDate();
+        }
+        if (months < 0) { months += 12; years--; }
+
+        // Записуємо значення в HTML
+        const elYears = document.getElementById("t-years");
+        if (elYears) { // Перевіряємо, чи є блок на сторінці
+            elYears.innerText = years;
+            document.getElementById("t-months").innerText = months;
+            document.getElementById("t-days").innerText = days;
+            document.getElementById("t-hours").innerText = hours;
+            document.getElementById("t-mins").innerText = minutes;
+            document.getElementById("t-secs").innerText = seconds;
+        }
+    }
+
+    // Запускаємо одразу, і потім оновлюємо щосекунди
+    updateTimer();
+    setInterval(updateTimer, 1000);
+
 });

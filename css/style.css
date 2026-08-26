@@ -595,3 +595,60 @@ p.tags{
         font-size: 1.3em;
     }
 }
+
+/* =========================================
+   ТАЙМЕР ВІДНОСИН
+   ========================================= */
+   .love-timer-container {
+    text-align: center;
+    margin: 30px auto;
+    padding: 20px;
+    background: rgba(255, 230, 234, 0.6); /* Світло-рожевий напівпрозорий фон */
+    border-radius: 15px;
+    border: 2px dashed #ff4d6d;
+    max-width: 90%;
+}
+
+.love-timer-container h3 {
+    color: #e91e63;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+}
+
+.time-blocks {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.t-box {
+    background: white;
+    padding: 10px 15px;
+    border-radius: 12px;
+    min-width: 60px;
+    box-shadow: 0 4px 10px rgba(255, 77, 109, 0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.t-box:hover {
+    transform: translateY(-5px);
+}
+
+.t-box span:first-child {
+    font-size: 1.6em;
+    font-weight: bold;
+    color: #e91e63;
+}
+
+.t-label {
+    font-size: 0.75em;
+    color: #555;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-top: 5px;
+}

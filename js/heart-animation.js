@@ -142,11 +142,16 @@ document.addEventListener("DOMContentLoaded", () => {
                     filterTags = card.tags.toLowerCase();
                 }
 
+                let optimizedImageUrl = card.imageUrl;
+                if (optimizedImageUrl.includes('/upload/')) {
+                    optimizedImageUrl = optimizedImageUrl.replace('/upload/', '/upload/q_auto,f_auto,w_400/');
+                }
+
                 const cardHTML = `
                     <div class="card-container" data-tags="${filterTags}">
                         <div class="card-inner">
                             <div class="card-front">
-                                <img src="${card.imageUrl}" alt="${card.title}" loading="lazy">
+                                <img src="${optimizedImageUrl}" alt="${card.title}" loading="lazy">
                             </div>
                             <div class="card-back">
                                 <h3>${card.title}</h3>
